@@ -33,7 +33,7 @@ export default function WordBankPage() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [state, status]);
 
   useEffect(() => {
     status === "unauthenticated" && rotuer.push("/");

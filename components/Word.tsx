@@ -9,8 +9,6 @@ interface propsObj {
 export default function Word(props: propsObj) {
   const { word, translate, id } = props;
   const hiddenTranslate = () => {
-    console.log(`${id}`);
-
     const p = document.querySelector(`[id='${id}']`) as HTMLParagraphElement;
 
     p.className === "hidden"

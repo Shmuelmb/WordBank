@@ -1,16 +1,12 @@
 export default function RemoveWord(props) {
   const { index, words, setWords, email } = props;
 
-  const removeWord = async () => {
-    let removedWord;
-    //       setWords(
-    //     words.filter((x: object) => {
-    //       return x !== words[index];
-    //     })
-    //   );
+  const postRemovedWord = async () => {
+    let removeThisWord;
+
     words.filter((x: object) => {
       if (x === words[index]) {
-        removedWord = x;
+        removeThisWord = x;
       }
     });
     try {
@@ -18,15 +14,17 @@ export default function RemoveWord(props) {
         method: "POST",
         body: JSON.stringify({
           email: email,
-          word: removedWord,
+          itemToRemoved: removeThisWord,
         }),
       });
       const res = await req.json();
-      console.log(res);
+      console.log(
+        res === 1 && ` #${index + 1} ${removeThisWord.Word} removed"`
+      );
     } catch (e) {
       console.log(e);
     }
   };
 
-  return <button onClick={removeWord}>למחוק</button>;
+  return <button onClick={postRemovedWord}>למחוק</button>;
 }

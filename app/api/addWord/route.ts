@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
-async function removeWord(email, itemToRemoved) {
+async function addWord(email: String, newWord: object) {
   try {
     const client = await clientPromise;
     const db = client.db("local");
-    const deleteAct = await db
+    const addAct = await db
       .collection("word-bank")
-      .updateOne({ Email: email }, { $pull: { words: itemToRemoved } });
+      .updateOne({ Email: email }, { $push: { words: newWord } });
 
-    return { deleteAct };
+    return { addAct };
   } catch (e) {
     console.error(e);
   }
@@ -17,11 +17,11 @@ async function removeWord(email, itemToRemoved) {
 
 export async function POST(req: Request, res: Response) {
   const body = await req.json();
-  const { email, itemToRemoved } = body;
+  const { email, newWord } = body;
   try {
-    const { deleteAct } = await removeWord(email, itemToRemoved);
+    const { addAct }: any = await addWord(email, newWord);
 
-    return NextResponse.json(deleteAct.modifiedCount);
+    return NextResponse.json(addAct.modifiedCount);
   } catch (e) {
     console.log(e);
   }
