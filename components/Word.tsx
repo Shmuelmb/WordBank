@@ -3,7 +3,7 @@
 interface propsObj {
   word: String;
   translate: String;
-  id: Number;
+  id: number;
 }
 
 export default function Word(props: propsObj) {
@@ -18,8 +18,8 @@ export default function Word(props: propsObj) {
       : (p.className = "hidden");
   };
   return (
-    <div className="flex h-32 text-center gap-5 flex-col border w-72 border-cyan-950">
-      <span>{id}</span>
+    <div className="flex h-40 text-center gap-5 flex-col border w-72 border-cyan-950">
+      <span>#{id + 1}</span>
       <span className=" text-4xl cursor-pointer" onClick={hiddenTranslate}>
         {word}
       </span>
