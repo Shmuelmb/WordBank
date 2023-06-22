@@ -4,7 +4,8 @@ import Word from "@/components/Word";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import RemoveWord from "@/components/removeWord";
+import RemoveWord from "@/components/RemoveWord";
+import AddWord from "@/components/AddWord";
 interface WordObj {
   Word: String;
   Translate: String;
@@ -41,6 +42,9 @@ export default function WordBankPage() {
 
   return (
     <div className="flex flex-col  items-center justify-center p-5">
+      {state.length > 0 && (
+        <AddWord words={state} setWords={setState} email={session.user.email} />
+      )}
       <ul className="flex flex-col gap-10 ">
         {state.length > 0 ? (
           state.map((item: WordObj, index: number) => {
