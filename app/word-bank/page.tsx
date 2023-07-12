@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import RemoveWord from "@/components/RemoveWord";
 import AddWord from "@/components/AddWord";
-import { wordType, userType } from "@/lib/types";
+import { wordType } from "@/lib/types";
 
 export default function WordBankPage() {
   const router = useRouter();
