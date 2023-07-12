@@ -1,19 +1,37 @@
 import React, { useRef } from "react";
+import { wordType } from "@/lib/types";
+import { SetStateAction } from "react";
+import { Dispatch } from "react";
+import { Session } from "next-auth";
+import { DefaultSession } from "next-auth";
+declare module "next-auth" {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: DefaultSession["user"];
+  }
+}
+interface propsType {
+  words: never[];
+  setWords: Dispatch<SetStateAction<never[]>>;
+  session: Session;
+}
 
-export default function AddWord(props) {
-  const { words, setWords, email } = props;
-  const postNewWord = async (newWord: object) => {
+export default function AddWord(props: propsType) {
+  const { words, setWords, session } = props;
+
+  const postNewWord = async (newWord: wordType) => {
     try {
       const req = await fetch("http://localhost:3000/api/addWord", {
         method: "POST",
         body: JSON.stringify({
-          email: email,
+          email: session.user?.email,
           newWord: newWord,
         }),
       });
       const res = await req.json();
       console.log(res.status);
-      // console.log(res === 1 && ` #${index + 1} ${newWord.Word} added"`);
     } catch (e) {
       console.log(e);
     }
@@ -25,7 +43,7 @@ export default function AddWord(props) {
     event.preventDefault();
     const wordInput = wordInputRef.current!.value;
     const translateInput = translateInputRef.current!.value;
-    const newWordObj = { Word: wordInput, Translate: translateInput };
+    const newWordObj = { word: wordInput, translate: translateInput };
 
     postNewWord(newWordObj);
   };

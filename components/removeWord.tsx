@@ -1,10 +1,16 @@
-export default function RemoveWord(props) {
-  const { index, words, setWords, email } = props;
+import { wordType } from "@/lib/types";
+
+interface propsType {
+  index: number;
+  words: never[];
+  session: any;
+}
+export default function RemoveWord(props: propsType) {
+  const { index, words, session } = props;
+  let removeThisWord: wordType;
 
   const postRemovedWord = async () => {
-    let removeThisWord;
-
-    words.filter((x: object) => {
+    words.filter((x: wordType) => {
       if (x === words[index]) {
         removeThisWord = x;
       }
@@ -13,13 +19,13 @@ export default function RemoveWord(props) {
       const req = await fetch("http://localhost:3000/api/deleteWord", {
         method: "POST",
         body: JSON.stringify({
-          email: email,
+          email: session.user.email,
           itemToRemoved: removeThisWord,
         }),
       });
       const res = await req.json();
       console.log(
-        res === 1 && ` #${index + 1} ${removeThisWord.Word} removed"`
+        res === 1 && ` #${index + 1} "${removeThisWord.word}" removed"`
       );
     } catch (e) {
       console.log(e);
