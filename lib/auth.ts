@@ -7,4 +7,5 @@ export const authConfig: NextAuthOptions = {
       clientSecret: process.env.CLIENT_SECRET ? process.env.CLIENT_SECRET : "",
     }),
   ],
+  secret: process.env.SECRET ? process.env.SECRET : "",
 };
