@@ -23,13 +23,16 @@ export default function AddWord(props: propsType) {
 
   const postNewWord = async (newWord: wordType) => {
     try {
-      const req = await fetch("http://localhost:3000/api/addWord", {
-        method: "POST",
-        body: JSON.stringify({
-          email: session.user?.email,
-          newWord: newWord,
-        }),
-      });
+      const req = await fetch(
+        `${process.env.BASE_URL ? process.env.BASE_URL : ""}/api/addWord`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: session.user?.email,
+            newWord: newWord,
+          }),
+        }
+      );
       const res = await req.json();
       console.log(res.status);
     } catch (e) {

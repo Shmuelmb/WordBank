@@ -16,13 +16,16 @@ export default function RemoveWord(props: propsType) {
       }
     });
     try {
-      const req = await fetch("http://localhost:3000/api/deleteWord", {
-        method: "POST",
-        body: JSON.stringify({
-          email: session.user.email,
-          itemToRemoved: removeThisWord,
-        }),
-      });
+      const req = await fetch(
+        `${process.env.BASE_URL ? process.env.BASE_URL : ""}/api/deleteWord`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: session.user.email,
+            itemToRemoved: removeThisWord,
+          }),
+        }
+      );
       const res = await req.json();
       console.log(
         res === 1 && ` #${index + 1} "${removeThisWord.word}" removed"`

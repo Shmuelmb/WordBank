@@ -14,15 +14,18 @@ export default function WordBankPage() {
   const getData = async () => {
     if (status === "authenticated") {
       let user = session.user;
-      const response = await fetch("http://localhost:3000/api/getUserData", {
-        method: "POST",
-        body: JSON.stringify({
-          user: user,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.BASE_URL ? process.env.BASE_URL : ""}/api/getUserData`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            user: user,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
       setState(data.words);
     }
