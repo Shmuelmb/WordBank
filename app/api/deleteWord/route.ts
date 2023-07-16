@@ -9,7 +9,6 @@ async function removeWord(email: string, itemToRemoved: wordType) {
     const deleteAct = await db
       .collection("word-bank")
       .updateOne({ email: email }, { $pull: { words: itemToRemoved } });
-    console.log(deleteAct);
 
     return { deleteAct };
   } catch (e) {

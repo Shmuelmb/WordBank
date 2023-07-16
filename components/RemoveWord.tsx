@@ -35,5 +35,5 @@ export default function RemoveWord(props: propsType) {
     }
   };
 
-  return <button onClick={postRemovedWord}>למחוק</button>;
+  return <button onClick={postRemovedWord}>Delete this word</button>;
 }

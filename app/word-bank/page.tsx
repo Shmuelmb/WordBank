@@ -11,6 +11,7 @@ export default function WordBankPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [state, setState] = useState([]);
+  const [name, setName] = useState([]);
   const getData = async () => {
     if (status === "authenticated") {
       let user = session.user;
@@ -28,6 +29,7 @@ export default function WordBankPage() {
       );
       const data = await response.json();
       setState(data.words);
+      setName(data.name);
     }
   };
 
@@ -40,11 +42,12 @@ export default function WordBankPage() {
   }, [status]);
 
   return (
-    <div className="flex flex-col  items-center justify-center p-5">
+    <div className="flex flex-col  items-center justify-center p-5 text-center">
       {status === "authenticated" ? (
         <div>
+          <h1 className="p-9"> Hey {name && name}</h1>
           <AddWord words={state} setWords={setState} session={session} />
-          <ul className="flex flex-col gap-10 ">
+          <ul className="flex flex-col gap-10 items-center p-5">
             {state.map((item: wordType, index: number) => {
               return (
                 <li key={index}>

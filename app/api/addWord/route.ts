@@ -10,7 +10,6 @@ async function addWord(email: String, newWord: wordType) {
     const addAct = await db
       .collection("word-bank")
       .updateOne({ email: email }, { $push: { words: newWord } });
-    console.log(addAct.modifiedCount);
 
     if (addAct.modifiedCount === 1) {
       const user = await db.collection("word-bank").findOne({ email: email });

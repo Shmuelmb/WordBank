@@ -1,6 +1,7 @@
 import "./globals.css";
 import { NextAuthProvider } from "./NextAuthProvider";
 import Navbar from "@/components/Navbar";
+
 export const metadata = {
   title: "word-bank",
   description: "word bank",
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <NextAuthProvider>
-        <body>
+        <body suppressHydrationWarning={true}>
           <Navbar />
           {children}
         </body>

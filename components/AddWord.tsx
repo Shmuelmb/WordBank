@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { wordType } from "@/lib/types";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { Session } from "next-auth";
 import { DefaultSession } from "next-auth";
+import { useState } from "react";
+import Modal from "./Modal";
 declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
@@ -20,6 +22,8 @@ interface propsType {
 
 export default function AddWord(props: propsType) {
   const { words, setWords, session } = props;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [modalState, setModalState] = useState({ content: "", state: false });
 
   const postNewWord = async (newWord: wordType) => {
     try {
@@ -34,7 +38,7 @@ export default function AddWord(props: propsType) {
         }
       );
       const res = await req.json();
-      console.log(res.status);
+      return res.status;
     } catch (e) {
       console.log(e);
     }
@@ -47,10 +51,20 @@ export default function AddWord(props: propsType) {
     const wordInput = wordInputRef.current!.value;
     const translateInput = translateInputRef.current!.value;
     const newWordObj = { word: wordInput, translate: translateInput };
-
-    postNewWord(newWordObj);
+    setIsSubmitting(true);
+    postNewWord(newWordObj)
+      .then((x) => {
+        setModalState({ content: x, state: true });
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        setIsSubmitting(false);
+      });
   };
-
+  
+  useEffect(() => {
+    console.log(modalState);
+  }, [modalState]);
   return (
     <form
       onSubmit={todoSubmitHandler}
@@ -73,9 +87,11 @@ export default function AddWord(props: propsType) {
       </div>
       <button
         type="submit"
-        className=" w-2/5 text-center  px-4 py-2  border rounded  hover:border-transparent hover:text-teal-500 hover:bg-white ">
-        Submit
+        className="w-2/5 text-center px-4 py-2 border rounded hover:border-transparent disabled:pointer-events-none disabled:bg-slate-300 hover:text-teal-500 hover:bg-white"
+        disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit"}
       </button>
+      <Modal content={modalState.content} modal={modalState.state} />
     </form>
   );
 }
