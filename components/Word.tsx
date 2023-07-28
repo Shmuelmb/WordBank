@@ -1,10 +1,18 @@
 "use client";
 
+import AIcon from "../assest/sound-max-svgrepo-com.svg";
+
 interface propsObj {
-  word: String;
-  translate: String;
+  word: string;
+  translate: string;
   id: number;
 }
+
+const textToSpeech = (text: string) => {
+  var msg = new SpeechSynthesisUtterance();
+  msg.text = text;
+  return window.speechSynthesis.speak(msg);
+};
 
 export default function Word(props: propsObj) {
   const { word, translate, id } = props;
@@ -15,6 +23,7 @@ export default function Word(props: propsObj) {
       ? (p.className = "text-2xl block")
       : (p.className = "hidden");
   };
+
   return (
     <div className="flex h-40 text-center gap-5 flex-col border w-72 border-cyan-950">
       <span>#{id + 1}</span>
@@ -24,6 +33,8 @@ export default function Word(props: propsObj) {
       <span className="hidden" id={`${id}`}>
         {translate}
       </span>
+      <button onClick={() => textToSpeech(word)}>Sound</button>
+      <AIcon />
     </div>
   );
 }

@@ -61,7 +61,7 @@ export default function AddWord(props: propsType) {
         setIsSubmitting(false);
       });
   };
-  
+
   useEffect(() => {
     console.log(modalState);
   }, [modalState]);
