@@ -1,6 +1,6 @@
 "use client";
-
-import AIcon from "../assest/sound-max-svgrepo-com.svg";
+import Image from "next/image";
+import AudioIcon from "../assest/sound-max-svgrepo-com.svg";
 
 interface propsObj {
   word: string;
@@ -34,7 +34,6 @@ export default function Word(props: propsObj) {
         {translate}
       </span>
       <button onClick={() => textToSpeech(word)}>Sound</button>
-      <AIcon />
     </div>
   );
 }
