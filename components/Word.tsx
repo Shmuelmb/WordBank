@@ -9,7 +9,7 @@ interface propsObj {
 }
 
 const textToSpeech = (text: string) => {
-  var msg = new SpeechSynthesisUtterance();
+  let msg = new SpeechSynthesisUtterance();
   msg.text = text;
   return window.speechSynthesis.speak(msg);
 };

@@ -1,10 +1,10 @@
 export interface wordType {
-  word: String;
-  translate: String;
+  word: string;
+  translate: string;
 }
 
 export interface userType {
-  email: String;
-  name: String;
+  email: string;
+  name: string;
   words: wordType[];
 }
